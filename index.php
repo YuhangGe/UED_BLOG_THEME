@@ -9,7 +9,7 @@
  			?>" id="post-<?php the_ID();?>">
 			<div class="postAside">
 				<div class="postAuthorImage">
-					<?php echo get_avatar(get_the_author_email(), 100)?>
+					<img src="<?php bloginfo('template_directory');?>/assets/head/<?php the_author_meta('user_login');?>.png" width="100" height="100" alt="<?php the_author_meta('display_name')?>"/>
 				</div>
 				<div class="postAuthor postLabel">
 					<?php the_author();?>
@@ -53,7 +53,7 @@
 				</div>
 			
 				<div class="postImage">
-							<img src="<?php bloginfo('template_directory');?>/assets/love.jpg"/>
+							<img src="<?php bloginfo('template_directory');?>/assets/slide/slide1.jpg"/>
 				</div>
 				
 				<div class="postText">

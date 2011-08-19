@@ -57,10 +57,13 @@
 						<li><img src="<?php bloginfo('template_directory');?>/assets/slide/slide1.png" alt="Ads" />
 						</li>
 						<li style="display: none">
-							<img src="<?php bloginfo('template_directory');?>/assets/love.jpg" alt="Ads" />
+							<img src="<?php bloginfo('template_directory');?>/assets/slide/slide1.png" alt="Ads" />
 						</li>
 						<li style="display: none">
-							<img src="<?php bloginfo('template_directory');?>/assets/daisy.jpg" alt="Ads" />
+							<img src="<?php bloginfo('template_directory');?>/assets/slide/slide1.png" alt="Ads" />
+						</li>
+						<li style="display: none">
+							<img src="<?php bloginfo('template_directory');?>/assets/slide/slide1.png" alt="Ads" />
 						</li>
 					</div>
 					<ul class="ks-switchable-nav">
