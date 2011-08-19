@@ -19,14 +19,29 @@
 				</div>
 				<div id="newComTail"></div>
 			</div>
-			<div id="photoShow">
-				<div class="ks-switchable-content">  <!-- 面板列表 -->
-					<div><img src="<?php bloginfo('template_directory'); ?>/assets/slide/photo1.jpg" alt="" /></div>
-					<div style="display: none"></div>
-					<div style="display: none"></div>
-					<div style="display: none"></div>
+			<div id="rightSlide">
+				<div id="J_RightSlide">
+					<ul class="ks-switchable-content">  <!-- 面板列表 -->
+						<li>
+							<img src="<?php bloginfo('template_directory'); ?>/assets/slide/photo1.jpg" alt="" />
+						</li>
+						<li style="display: none">
+							<img src="<?php bloginfo('template_directory'); ?>/assets/head.jpg" alt="" />
+						</li>
+						<li style="display: none">
+							<img src="<?php bloginfo('template_directory'); ?>/assets/daisy.jpg" alt="" />
+						</li>
+						<li style="display: none">
+							<img src="<?php bloginfo('template_directory'); ?>/assets/love.jpg" alt="" />
+						</li>
+					</ul>
 				</div>
-				<div id="photoTitle"><span id="photoLeft"></span>占位标题<span id="photoRight"></span></div>	
+				
+				<div id="photoTitle">
+					<span id="photoLeft"></span>
+					占位标题
+					<span id="photoRight"></span>
+				</div>	
 			</div>
 			<div id="contact">
 				<span ><a id="twitter" href=""></a></span>

@@ -31,8 +31,7 @@
 		<link rel="pingback" href="<?php bloginfo('pingback_url');?>" />
 		<!-- KISSY -->
 		<script type="text/javascript" src="http://a.tbcdn.cn/s/kissy/1.2.0/kissy-min.js"></script>
-		<script type="text/javascript" src="<?php bloginfo('template_directory'); ?>/js/ued-blog.js"></script>
-		
+		<script type="text/javascript" src="<?php bloginfo('template_directory');?>/js/ued-blog.js"></script>
 		<?php
 		/* Always have wp_head() just before the closing </head>
 		 * tag of your theme, or you will break many plugins, which
@@ -42,52 +41,42 @@
 		wp_head();
 		?>
 	</head>
-	<body <?php body_class(); ?>>
+	<body <?php body_class();?>>
 		<header id="header">
 			<div id="topBar">
 				<div class="center w1000">
 					<span id="logo"><a href="."><img src="<?php bloginfo('template_directory');?>/assets/logo.png" alt="TaoBao UED" /></a></span>
 					<ul id="navigation" class="fontHei">
-						<li>
-							<a href="">交互设计</a>
-						</li>
-						<li>
-							<a href="">视觉设计</a>
-						</li>
-						<li>
-							<a href="">网页前端</a>
-						</li>
-						<li>
-							<a href="">用户研究</a>
-						</li>
-						<li>
-							<a href="">杂七杂八</a>
-						</li>
-						<li>
-							<a href="">加入我们!</a>
-						</li>
+						<?php ued_menu();?>
 					</ul>
 				</div>
 			</div>
-			<div id="imgShow" class="center w1000">
-				<div id="J_ADSlide">
+			<div id="headSlide" class="center w1000">
+				<div id="J_HeadSlide">
+					<div class="ks-switchable-content">
+						<li><img src="<?php bloginfo('template_directory');?>/assets/slide/slide1.png" alt="Ads" />
+						</li>
+						<li style="display: none">
+							<img src="<?php bloginfo('template_directory');?>/assets/love.jpg" alt="Ads" />
+						</li>
+						<li style="display: none">
+							<img src="<?php bloginfo('template_directory');?>/assets/daisy.jpg" alt="Ads" />
+						</li>
+					</div>
 					<ul class="ks-switchable-nav">
 						<li class="ks-active"></li>
-						<li></li>
-						<li></li>
+						<li class=""></li>
+						<li class=""></li>
 					</ul>
-					<div class="ks-switchable-content">
-						<div><img src="<?php bloginfo('template_directory');?>/assets/slide/slide1.png" alt="Ads" />
-						</div>
-						<div style="display: none"></div>
-						<div style="display: none"></div>
-					</div>
-					<b id="leftCtrl" ></b>
-					<b id="rightCtrl"></b>
+					<b id="leftSlideCtrl" style="display: none;"></b>
+					<b id="rightSlideCtrl" style="display: none;"></b>
 				</div>
 			</div>
 			<div id="topNotice" class="w1000 center fontHei">
-				<span id="msgNotice"><span id="textNotice">团队公告</span><a href="#">UED搜索团队招聘xxxxxx</a></span>
+				<span id="msgNotice">
+					<span id="textNotice">团队公告</span>
+					<?php ued_announcement();?>
+				</span>
 				<form action="<?php bloginfo('url');?>/" method="get" id="topSearch">
 					<label for="s" class="textHidden">请输入搜索关键字</label>
 					<input type="text" id="s" name="s"/>

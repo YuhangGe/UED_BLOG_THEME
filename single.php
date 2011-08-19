@@ -2,23 +2,57 @@
 	<div id="container" class="center w1000">
 		<?php the_post(); ?>
 		<div class="postAside">
-			<div class="postAuthorImage"></div>
-			<div class="postAuthor postLabel"><?php the_author(); ?></div>
-			<div class="postDate postLabel" title="<?php the_time('Y年n月j日 G:i:s'); ?>"><?php the_time('n月j'); ?></div>
-			<div class="postFunction">
-				<?php if(get_the_tags()): ?>
-				<div class="tagBox"><?php get_3tags(); ?></div>
-				<?php endif; ?>
-				<div class="postUp postLabel LabelDark">顶(XXX)</div>
-				<div class="postShare postLabel LabelDark">分享到</div>
-			</div>
+				<div class="postAuthorImage">
+					<?php echo get_avatar(get_the_author_meta('user_email'), 100)?>
+				</div>
+				<div class="postAuthor postLabel">
+					<?php the_author();?>
+				</div>
+				<div class="postDate postLabel" title="<?php the_time('Y年n月j日 G:i:s');?>">
+					<?php the_time('n月j日');?>
+				</div>
+				<div class="postFunction" id="postFunc-<?php the_ID();?>" >
+						<div class="tagBox">
+							<?php ued_tag_box() ?>
+						</div>
+						<?php ued_ding();?>
+						<div id="shareBtn-<?php the_ID();?>" class="postShare postLabel LabelDark">
+							<span>分享到</span>
+							<div class="shareDialog" id="shareDlg-<?php the_ID();?>" style="display: none;">
+								<a href="http://share.xiaonei.com/share/buttonshare.do?link=<?php the_permalink() ?>&title=<?php the_title(); ?>" title="分享到人人网" target="_blank" rel="nofollow" ><img src="http://s.xnimg.cn/favicon-rr.ico" alt="分享到人人网"  /></a>
+								<a href="http://v.t.sina.com.cn/share/share.php?url=<?php the_permalink() ?>&title=<?php the_title(); ?>" title="分享到新浪微博" target="_blank" rel="nofollow"><img src="http://t.sina.com.cn/favicon.ico" alt="分享到新浪微博" /></a>
+								<a href="javascript:(function(){window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='+ encodeURIComponent(location.href)+ '&title='+encodeURIComponent(document.title));})()" title="分享到QQ空间" target="_blank" rel="nofollow"><img src="http://qzone.qq.com/favicon.ico" alt="分享到QQ空间"  /></a>
+								<a href="http://share.xiaonei.com/share/buttonshare.do?link=<?php the_permalink() ?>&title=<?php the_title(); ?>" title="分享到人人网" target="_blank" rel="nofollow" ><img src="http://s.xnimg.cn/favicon-rr.ico" alt="分享到人人网"  /></a>
+								<a href="http://v.t.sina.com.cn/share/share.php?url=<?php the_permalink() ?>&title=<?php the_title(); ?>" title="分享到新浪微博" target="_blank" rel="nofollow"><img src="http://t.sina.com.cn/favicon.ico" alt="分享到新浪微博" /></a>
+								<a href="javascript:(function(){window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='+ encodeURIComponent(location.href)+ '&title='+encodeURIComponent(document.title));})()" title="分享到QQ空间" target="_blank" rel="nofollow"><img src="http://qzone.qq.com/favicon.ico" alt="分享到QQ空间"  /></a>
+								
+							</div>
+						</div>
+					   <script>
+							KISSY.all('#shareBtn-<?php the_ID();?>').on('mouseenter',function(){
+								showShare(<?php the_ID();?>);
+							}).on('mouseleave',function(){
+								hideShare(<?php the_ID();?>);
+							});
+						</script>
+				</div>
+				<!--在单张文档页面，左边功能栏默认打开 -->
+				<div calss="postAsideBottom">
+						<div id="postBtn-<?php the_ID();?>" onclick="showHideFunc(<?php the_ID();?>);" class="postBtn"><b class="down-narrow up-narrow"></b></div>
+				</div>
+			
 		</div>
-		<div class="postContent postContentMain">
-			<div class="postTitle fontHei postTitleMain"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></div>
-			<div class="postText"><?php the_content(); ?></div>
+		<div class="postContentMain">
+			<div class="postTitle fontHei postTitleMain">
+				<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+			</div>
+			<div class="postText">
+				<?php the_content(); ?>
+			</div>
+			<div class="postTail"></div>
 		</div>
 		<div class="postComment">
-			<?php get_allComments(get_the_ID()); ?>
+			<?php ued_post_comments(get_the_ID()); ?>
 		</div>
 		<form method="post" action="<?php  echo get_option( 'siteurl' ); ?>/wp-comments-post.php" class="newComment">
 			<p><label for="author" class="textHidden">名字</label><input class="inputBox" id="author" name="author" type="text" /></p>

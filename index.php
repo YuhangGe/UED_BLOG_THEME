@@ -9,7 +9,7 @@
  			?>" id="post-<?php the_ID();?>">
 			<div class="postAside">
 				<div class="postAuthorImage">
-					<img src="<?php ?>" />
+					<?php echo get_avatar(get_the_author_email(), 100)?>
 				</div>
 				<div class="postAuthor postLabel">
 					<?php the_author();?>
@@ -21,13 +21,26 @@
 						<div class="tagBox">
 							<?php ued_tag_box() ?>
 						</div>
-						<div class="postUp postLabel LabelDark">
-							顶(XXX)
+						<?php ued_ding();?>
+						<div id="shareBtn-<?php the_ID();?>" class="postShare postLabel LabelDark">
+							<span>分享到</span>
+							<div class="shareDialog" id="shareDlg-<?php the_ID();?>" style="display: none;">
+								<a href="http://share.xiaonei.com/share/buttonshare.do?link=<?php the_permalink() ?>&title=<?php the_title(); ?>" title="分享到人人网" target="_blank" rel="nofollow" ><img src="http://s.xnimg.cn/favicon-rr.ico" alt="分享到人人网"  /></a>
+								<a href="javascript:(function(){window.open('http://v.t.sina.com.cn/share/share.php?url=<?php the_permalink() ?>&title=<?php the_title(); ?>');})()" title="分享到新浪微博" target="_blank" rel="nofollow"><img src="http://t.sina.com.cn/favicon.ico" alt="分享到新浪微博" /></a>
+								<a href="javascript:(function(){window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='+ encodeURIComponent(location.href)+ '&title='+encodeURIComponent(document.title));})()" title="分享到QQ空间" target="_blank" rel="nofollow"><img src="http://qzone.qq.com/favicon.ico" alt="分享到QQ空间"  /></a>
+								<a href="http://share.xiaonei.com/share/buttonshare.do?link=<?php the_permalink() ?>&title=<?php the_title(); ?>" title="分享到人人网" target="_blank" rel="nofollow" ><img src="http://s.xnimg.cn/favicon-rr.ico" alt="分享到人人网"  /></a>
+								<a href="http://v.t.sina.com.cn/share/share.php?url=<?php the_permalink() ?>&title=<?php the_title(); ?>" title="分享到新浪微博" target="_blank" rel="nofollow"><img src="http://t.sina.com.cn/favicon.ico" alt="分享到新浪微博" /></a>
+								<a href="javascript:(function(){window.open('http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='+ encodeURIComponent(location.href)+ '&title='+encodeURIComponent(document.title));})()" title="分享到QQ空间" target="_blank" rel="nofollow"><img src="http://qzone.qq.com/favicon.ico" alt="分享到QQ空间"  /></a>
+								
+							</div>
 						</div>
-						<div class="postShare postLabel LabelDark">
-							分享到
-						</div>
-					
+						<script>
+							KISSY.all('#shareBtn-<?php the_ID();?>').on('mouseenter',function(){
+								showShare(<?php the_ID();?>);
+							}).on('mouseleave',function(){
+								hideShare(<?php the_ID();?>);
+							});
+						</script>
 				</div>
 				<div calss="postAsideBottom">
 						<div id="postBtn-<?php the_ID();?>" onclick="showHideFunc(<?php the_ID();?>);" class="postBtn"><b class="down-narrow"></b></div>
@@ -56,9 +69,11 @@
 			endwhile;
 		?>
 		<?php else:?>
-			
+			<h2>没有找到文章</h2>
+			<p>这张页面需要设计师设计</p>
 		<?php endif;?>
-		<?php wp_pagenavi();?>
+		<?php ued_pagenavi();?>
 	</section>
 	<?php get_sidebar();?>
 	<?php get_footer();?>
+	

@@ -75,5 +75,8 @@
 				Copyright &copy; 2011TaoBao UED. All rights reserved.
 			</div>
 		</footer>
+		
+		<?php wp_footer(); ?>
+		
 	</body>
 </html>

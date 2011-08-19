@@ -92,20 +92,25 @@ body {
 #navigation li a:hover {
 	background: url("assets/topBarH.png") repeat-x;
 }
-#imgShow {
+#headSlide {
 	margin-top: 27px;
 	position: relative;
+	height: 270px;
+	overflow: hidden;
 }
-#J_ADSlide {
-	position: relative;
+#J_HeadSlide .ks-switchable-content li{
+	height: 250px;
+	width : 1000px;
+	overflow: hidden;
 }
-#J_ADSlide .ks-switchable-nav {
+
+#J_HeadSlide .ks-switchable-nav {
 	position: absolute;
 	right: 7px;
-	bottom: -15px;
+	top: 260px;
 	height: 8px;
 }
-#J_ADSlide .ks-switchable-nav li {
+#J_HeadSlide .ks-switchable-nav li {
 	width: 6px;
 	height: 6px;
 	border: 1px solid #B3B3B3;
@@ -115,10 +120,11 @@ body {
 	float: left;
 	border-radius: 4px;
 }
-#J_ADSlide .ks-switchable-nav li.ks-active {
+#J_HeadSlide .ks-switchable-nav li.ks-active {
 	background-color: #B3B3B3;
 }
-#leftCtrl {
+
+#leftSlideCtrl {
 	position: absolute;
 	background: url('assets/left.png') no-repeat left top;
 	height: 38px;
@@ -127,7 +133,7 @@ body {
 	top: 105px;
 	cursor: pointer;
 }
-#rightCtrl {
+#rightSlideCtrl {
 	position: absolute;
 	background: url('assets/right.png') no-repeat left top;
 	height: 38px;
@@ -194,6 +200,7 @@ body {
 	margin-top: 27px;
 	padding-top: 27px;
 	padding-bottom: 130px;
+	border-radius: 2px;
 }
 #container section {
 	width: 772px;
@@ -237,7 +244,7 @@ body {
 }
 .postLabel {
 	width: 100px;
-	height: 27px;
+	min-height: 27px;
 	border-radius: 2px;
 	line-height: 27px;
 	text-indent: 32px;
@@ -245,6 +252,14 @@ body {
 	-webkit-box-shadow: 1px -1px #D8D7D5;
 	color: #797979;
 	text-shadow: -1px 1px white;
+	cursor: pointer;
+}
+
+.postLabel:hover {
+	color: #FC7A23;
+}
+.postLabel .dingNum{
+	position: relative;
 }
 .postDate {
 	background: #E7E6E3 url('assets/date.png') no-repeat 5px 7px;
@@ -298,11 +313,43 @@ body {
 .postUp {
 	background: #B0B0AF url('assets/arrowUp.png') no-repeat 8px 7px;
 	margin-top: 22px;
+	overflow: hidden;
+}
+.postUp span{
+	font-weight: bold;
+	text-shadow: 0px 0px 0px;
 }
 .postShare {
 	background: #B0B0AF url('assets/fav.png') no-repeat 7px 7px;
 	margin-top: 10px;
+	position: relative;
+		cursor: pointer;
 }
+.shareDialog{
+	position: absolute;
+	background: url("assets/dlg.png") repeat scroll 1px 0px;
+	border-radius: 2px;
+	left: 100px;
+	top: -1px;
+	padding:0px 3px 3px 3px;
+	width:85px;
+
+}
+.postShare:hover span{
+	color: #FC7A23;
+}
+.shareDialog a{
+	display: inline-block;
+	float: left;
+	margin: 5px;
+	width: 18px;
+}
+.shareDialog img{
+	float: left;
+	width:18px;
+	height: 18px;
+}
+
 .postAsideBottom {
 	text-align: center;
 }
@@ -317,9 +364,9 @@ body {
 	cursor: pointer;
 	overflow: hidden;
 }
+
 .postFunction {
 
-	overflow: hidden;
 }
 .postBtn .down-narrow {
 	display: block;
@@ -353,9 +400,8 @@ body {
 .postTitle {
 	font-size: 24px;
 	font-family: 'Microsoft Yahei';
-	height: 66px;
-	line-height: 66px;
-	padding-left: 22px;
+	line-height: 35px;
+	padding: 5px 22px 15px 22px;
 	border-bottom: 1px dotted #b8b5af;
 	overflow: hidden;
 }
@@ -427,6 +473,7 @@ body {
 	border: 1px solid #B3B3B3;
 	background: url('assets/tagBG.png') repeat top left #EBEBEA;
 	overflow: hidden;
+	border-radius: 3px;
 }
 #hotTagTitle {
 	width: 100%;
@@ -453,7 +500,7 @@ body {
 	height: 339px;
 	border: 1px solid #B3B3B3;
 	margin-top: 17px;
-	border-radius: 4px;
+	border-radius: 3px;
 	position: relative;
 	background: #EBEBEA;
 	overflow: hidden;
@@ -499,11 +546,20 @@ body {
 	text-decoration: none;
 	line-height: 15pt;
 }
-#photoShow {
+#rightSlide {
+	background: #5B4B3D;
 	width: 209px;
 	height: 299px;
 	margin-top: 40px;
 	position: relative;
+	overflow: hidden;
+}
+#J_RightSlide li{
+	overflow: hidden;
+	width: 209px;
+}
+#J_RightSlide .ks-switchable-content{
+	height: 299px;
 	overflow: hidden;
 }
 #photoTitle {
