@@ -129,10 +129,43 @@ function get_month_archives($limit){
 		return $arcresults;
 }
 
-?>
+/*
+ * 输出头部幻灯片
+ */
+function ued_head_slide(){
+	$head_slides = get_option("ued_head_slide");
+	if ($head_slides==null) {
+		$head_slides = array();
+		add_option('ued_head_slide',json_encode($head_slides));
+	} else {
+		$head_slides = json_decode($head_slides);
+	}
+	$nav_html="";
+	$slide_html="";
+	foreach($head_slides as $slide){
+		$nav_html.="<li></li>";
+		$slide_html.="<li><img src='{$slide->url}' alt='{$slide->alt}' title='{$slide->describe}' /></li>";
+	}
+	echo "<ul class='ks-switchable-content'>$slide_html</ul><ul class='ks-switchable-nav'>$nav_html</ul>";
+}
+function ued_right_slide(){
+	$right_slides = get_option("ued_right_slide");
+	if ($right_slides==null) {
+		$right_slides = array();
+		add_option('ued_head_slide',json_encode($right_slides));
+	} else {
+		$right_slides = json_decode($right_slides);
+	}
+	$nav_name=array();
+	$slide_html="";
 
-<?php
-
+	foreach($right_slides as $slide){
+		$nav_name[]=$slide->alt;
+		$slide_html.="<li><img src='{$slide->url}' alt='{$slide->alt}' title='{$slide->describe}' /></li>";
+	}
+	$nav_html=json_encode($nav_name);
+	echo "<ul class='ks-switchable-content'>$slide_html</ul><script>ued_right_slide.items=$nav_html;</script>";
+}
 /**
  * 渲染$id的单篇文章的所有评论，用在single.php中
  */
@@ -141,11 +174,20 @@ function ued_post_comments($pid){
 	$comments=get_comments(array('post_id'=>$pid,'order'=>'ASC'));
 	foreach($comments as $comment):
 	?>
-	<article id="comment-<?php echo $comment -> comment_ID;?>" class="commentEntry">
+	<div id="comment-<?php echo $comment -> comment_ID;?>" class="commentEntry">
 		<div class="commentTitle">
-			<?php echo get_avatar($comment, 32);?>
+			
+			<?php if($comment->user_id!=0):?>
+				<img src="<?php bloginfo('template_directory');?>/assets/head/<?php the_author_meta('user_login');?>.png" width="32" height="32" alt="<?php the_author_meta('nickname')?>"/>
+			<?php else:
+				echo get_avatar($comment, 32);
+			endif;?>
 			<div class="commentAuthor">
+			<?php if($comment->user_id==0):?>
 				<span><?php echo $comment -> comment_author_url == '' ? $comment -> comment_author : '<a href="' . $comment -> comment_author_url . '">' . $comment -> comment_author . '</a>';?></span>
+			<?php else:?>
+				<span><a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ));?>"><?php the_author_meta('nickname');?></a></span>
+			<?php endif;?>
 				<span class="commentDate">（<?php echo mysql2date("n月j日",$comment->comment_date);?>）</span>
 			</div>
 		</div>
@@ -153,7 +195,7 @@ function ued_post_comments($pid){
 		<div class="commentBody">
 			<?php echo $comment -> comment_content;?>
 		</div>
-	</article>
+	</div>
 <?php 
 	endforeach ;
 }
@@ -205,7 +247,7 @@ function ued_menu(){
 	foreach($menu_names as $m){
 		$c_id = get_cat_ID( $m );
     	$link= get_category_link( $c_id );
-		echo "<li><a href='".get_bloginfo('url')."/?cat=$c_id' title='$m'>$m</a></li>";
+		echo "<li".(is_category($m)==true?" class='activeMenu'":"")."><a href='".get_bloginfo('url')."/?cat=$c_id' title='$m'>$m</a></li>";
 		
 	}
 	echo "<li><a href='http://ued.taobao.com/job' title='加入我们'>加入我们!</a></li>";
@@ -244,23 +286,26 @@ function ued_pagenavi($pages_to_show = 9) {
 			$paged = 1;
 		}
 		if($max_page > 1) {
-			echo "<div class='pagers'>";
+			echo "<ul class='pagers'>";
 		
-			previous_posts_link($prelabel);
+			$p_link=get_previous_posts_link($prelabel,$max_page);
+			if($p_link!=null) echo "<li class='nextPage'>$p_link</li>";
 			for($i = $paged - $half_pages_to_show; $i <= $paged + $half_pages_to_show; $i++) {
 				if ($i >= 1 && $i <= $max_page) {
 					if($i == $paged) {
-						echo "<strong>$i</strong>";
+						echo "<li class='curPage'>$i</li>";
 					} else {
-						echo '<a href="'.get_pagenum_link($i).'">'.$i.'</a>';
+				
+						echo '<li><a href="'.get_pagenum_link($i).'">'.$i.'</a></li>';
 					}
 				}
 			}
-			next_posts_link($nxtlabel, $max_page);
+			$n_link=get_next_posts_link($nxtlabel, $max_page);
+			if($n_link!=null) echo "<li class='nextPage'>$n_link</li>";
 			//if (($paged+$half_pages_to_show) < ($max_page)) {
 			//echo '<a href="'.get_pagenum_link($max_page).'"> &raquo;</a>';
 			//}
-			echo "</div>";
+			echo "</ul>";
 		}
 	}
 }
@@ -276,13 +321,47 @@ function ued_announcement(){
 }
 
 
-add_action('admin_menu', 'ued_announce');
+/**
+ * 以下内容是为后台管理增加管理页面。
+ * 请参考wordpress开发文档
+ * TODO: 目前后台管理每个小模块都是一张页面，可以考虑合并成一个UED博客管理页面。同时，下个版本可以考虑ajax实现。
+ * */
 
-function ued_announce() {
-	add_dashboard_page('My Plugin Dashboard', '团队公告', 'read', 'my-unique-identifier', 'ued_announce_set');
+/*
+ * 增加团队公告设置页面
+ */
+add_action('admin_menu', 'ued_set_announce');
+
+function ued_set_announce() {
+	add_dashboard_page('UED Announcement', '团队公告', 'manage_options', 'ued-announce-identifier', 'ued_announce_page');
 }
 
-function ued_announce_set(){
+function ued_announce_page(){
 	include_once dirname ( __FILE__ ) . "/admin/announce.php";
+}
+
+/*
+ * 头部幻灯片设置页面
+ */
+add_action('admin_menu','ued_set_headslide');
+
+function ued_set_headslide(){
+	add_dashboard_page('UED Head Slide','头部幻灯','manage_options','ued-headslide-identifier','ued_headslide_page');
+}
+function ued_headslide_page(){
+	include_once dirname ( __FILE__ ) . "/admin/head_slide.php";
+}
+
+/**
+ * 右侧幻灯片设置页面
+ * 
+ */
+add_action('admin_menu','ued_set_rightslide');
+
+function ued_set_rightslide(){
+	add_dashboard_page('UED Head Slide','右侧幻灯','manage_options','ued-rightslide-identifier','ued_rightslide_page');
+}
+function ued_rightslide_page(){
+	include_once dirname ( __FILE__ ) . "/admin/right_slide.php";
 }
 ?>

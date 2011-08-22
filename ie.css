@@ -1,0 +1,48 @@
+#topNotice{
+	height: 28px;
+}
+#msgNotice{
+	float: left;
+}
+#topSearch{
+	float: right;
+}
+#topSearch input{
+	border: 0px;
+	outline: none;
+}
+#s{
+	height: 19px;
+}
+#btnSearch{
+	border: 0px;
+	outline: none;
+}
+#hotTagContent a{
+	margin-top: 18px;
+}
+.postBtn .up-narrow{
+	border-width:6px;
+	top:-4px;
+}
+.postContent{
+	border-left:1px solid  #C6C7C6;
+	border-bottom: 2px solid  #C6C7C6;
+}
+.postRead{
+	border-top:1px solid  #E0E0DF;
+	border-right: 1px solid  #E0E0DF;
+}
+
+#s2{
+	border: 0px;
+}
+
+.commentBody{
+	border-bottom: 1px solid  #DDDDDD;
+	border-left:1px solid  #DDDDDD;
+}
+.inputBox{
+	border-top:1px solid #D6D3CD;
+	border-right:1px solid #D6D3CD;
+}

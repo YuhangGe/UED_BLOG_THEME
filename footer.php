@@ -1,5 +1,5 @@
 			<div class="clear"></div>
-			<footer id="footer">
+			<div id="footer">
 			<div class="center w1000">
 				<div id="footNav">
 					<div class="footItem footSearch">
@@ -30,10 +30,7 @@
 							<li class="footSep"></li>
 							<li>
 								<ul id="stateList" class="footList">
-									<?php ued_month_archives(6);?>
-									<li>
-										<a href="">more...</a>
-									</li>
+									<?php ued_month_archives(12);?>
 								</ul>
 							</li>
 						</ul>
@@ -48,12 +45,9 @@
 								<ul class="footList">
 									<?php wp_list_bookmarks(array(
 										'title_li'=>null,
-										'limit'=>6,
+										'limit'=>12,
 										'categorize'=>false
 									));?>
-									<li>
-										<a href="">more...</a>
-									</li>
 								</ul>
 							</li>
 						</ul>
@@ -74,7 +68,7 @@
 			<div id="copyright">
 				Copyright &copy; 2011TaoBao UED. All rights reserved.
 			</div>
-		</footer>
+		</div>
 		
 		<?php wp_footer(); ?>
 		

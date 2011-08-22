@@ -121,13 +121,11 @@ function dingAnim(id, num) {
 }
 
 /*
- * 头部幻灯片
+ * 控制头部幻灯片，此处封装到ued_head_slide对象中，是为了方便代码管理
  */
 ued_head_slide = {
 	init : function() {
 		var me = this;
-		this.l_s = false;
-		this.r_s = false;
 		this.l_ctrl = $('#leftSlideCtrl');
 		this.r_ctrl = $('#rightSlideCtrl');
 		KISSY.use("switchable", function(S, Switchable) {
@@ -138,66 +136,34 @@ ued_head_slide = {
 								circular : false
 			});
 		});
-
 		$('#J_HeadSlide').on('mouseenter', function() {
-			me.showLeft();
-			me.showRight();
+			me.l_ctrl.fadeIn(0.3);
+			me.r_ctrl.fadeIn(0.3);
 		}).on('mouseleave', function() {
-			me.hideLeft();
-			me.hideRight();
+			me.l_ctrl.fadeOut(0.3);
+			me.r_ctrl.fadeOut(0.3);
 		});
-
 		this.l_ctrl.on('click', function() {
-			if(me.slide.activeIndex == 1) {
-				me.hideLeft();
-			}
-			if(me.slide.activeIndex != 0) {
 				me.slide.prev();
-				me.showRight();
-			}
 		});
-
 		this.r_ctrl.on('click', function() {
-			if(me.slide.activeIndex == me.slide.length - 2) {
-				me.hideRight();
-			}
-			if(me.slide.activeIndex != me.slide.length - 1) {
 				me.slide.next();
-				me.showLeft();
-			}
-
 		});
-	},
-	showLeft : function() {
-		if(this.slide.activeIndex != 0 && this.l_s == false) {
-			this.l_ctrl.fadeIn(0.3);
-			this.l_s = true;
-		}
-
-	},
-	showRight : function() {
-		if(this.slide.activeIndex != this.slide.length - 1 && this.r_s == false) {
-			this.r_ctrl.fadeIn(0.3);
-			this.r_s = true;
-		}
-
-	},
-	hideLeft : function() {
-		if(this.l_s == true)
-			this.l_ctrl.fadeOut(0.3);
-		this.l_s = false;
-	},
-	hideRight : function() {
-		if(this.r_s == true)
-			this.r_ctrl.fadeOut(0.3);
-		this.r_s = false;
 	}
 }
+/*
+ * 控制右边栏幻灯片，此处封装到ued_right_slide对象中，是为了方便代码管理
+ * 右边栏幻灯片在单个文章页面(single.php)中是不需要的，这里为了方便把代码统一写在ued-blog.js中，可以考虑对
+ * single.php页面的js单独提取出来
+ */
 ued_right_slide = {
+	items:[],
 	init : function() {
 		var me = this;
 		this.l_ctrl = $('#photoLeft');
 		this.r_ctrl = $('#photoRight');
+		if($('#J_RightSlide').length==0)
+			return;
 		KISSY.use("switchable", function(S, Switchable) {
 			me.slide = new Switchable.Slide('#J_RightSlide', {
 				effect : 'scrollx',
@@ -206,7 +172,16 @@ ued_right_slide = {
 				hasTriggers : false,
 				circular : false
 			});
+			
+			me.slide.on('beforeSwitch', function(ev) {
+				$('#photoTitle').html(
+					me.items[ev.toIndex]
+				);
+			});
+			
+			me.slide.next();
 		});
+
 		this.l_ctrl.on('click', function() {
 			me.slide.prev();
 		});
@@ -214,5 +189,15 @@ ued_right_slide = {
 		this.r_ctrl.on('click', function() {
 			me.slide.next();
 		});
+		
+		
 	}
 }
+
+/*
+ * 处理评论的js代码，在index.php中是不需要的，此处放在ued-blog.js中是为了主题统一使用一个js文件，
+ * 可以考虑提取出来。
+ */
+
+
+

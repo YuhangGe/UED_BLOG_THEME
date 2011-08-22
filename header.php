@@ -25,6 +25,8 @@
 		<meta name="generator" content="WordPress <?php bloginfo('version');?>" />
 		<!-- leave this for stats please -->
 		<link rel="stylesheet" href="<?php bloginfo('stylesheet_url');?>" type="text/css" media="screen" />
+
+
 		<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="<?php bloginfo('rss2_url');?>" />
 		<link rel="alternate" type="text/xml" title="RSS .92" href="<?php bloginfo('rss_url');?>" />
 		<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="<?php bloginfo('atom_url');?>" />
@@ -32,7 +34,30 @@
 		<!-- KISSY -->
 		<script type="text/javascript" src="http://a.tbcdn.cn/s/kissy/1.2.0/kissy-min.js"></script>
 		<script type="text/javascript" src="<?php bloginfo('template_directory');?>/js/ued-blog.js"></script>
+		
+		<!--[if lte IE 8]>
+		<link rel="stylesheet" href="<?php bloginfo('template_directory');?>/ie.css"></link>
+		<![endif]-->
+		<!--[if lte IE 7]>
+		<style>
+			.pagers li{
+				display:inline;
+			}
+			.postBtn .down-narrow{
+				left:0px;
+			}
+			.commentArrow{
+				top:41px;
+			}
+			.commentBody{
+					display: inline;
+				zoom:1;
+			}
+		</style>
+		<![endif]-->
+		
 		<?php
+		
 		/* Always have wp_head() just before the closing </head>
 		 * tag of your theme, or you will break many plugins, which
 		 * generally use this hook to add elements to <head> such
@@ -42,10 +67,10 @@
 		?>
 	</head>
 	<body <?php body_class();?>>
-		<header id="header">
+		<div id="header">
 			<div id="topBar">
 				<div class="center w1000">
-					<span id="logo"><a href="."><img src="<?php bloginfo('template_directory');?>/assets/logo.png" alt="TaoBao UED" /></a></span>
+					<span id="logo"><a href="<?php bloginfo('url');?>"><img src="<?php bloginfo('template_directory');?>/assets/logo.png" alt="TaoBao UED" /></a></span>
 					<ul id="navigation" class="fontHei">
 						<?php ued_menu();?>
 					</ul>
@@ -53,24 +78,8 @@
 			</div>
 			<div id="headSlide" class="center w1000">
 				<div id="J_HeadSlide">
-					<div class="ks-switchable-content">
-						<li><img src="<?php bloginfo('template_directory');?>/assets/slide/slide1.png" alt="Ads" />
-						</li>
-						<li style="display: none">
-							<img src="<?php bloginfo('template_directory');?>/assets/slide/slide1.png" alt="Ads" />
-						</li>
-						<li style="display: none">
-							<img src="<?php bloginfo('template_directory');?>/assets/slide/slide1.png" alt="Ads" />
-						</li>
-						<li style="display: none">
-							<img src="<?php bloginfo('template_directory');?>/assets/slide/slide1.png" alt="Ads" />
-						</li>
-					</div>
-					<ul class="ks-switchable-nav">
-						<li class="ks-active"></li>
-						<li class=""></li>
-						<li class=""></li>
-					</ul>
+					<?php ued_head_slide();?>
+				
 					<b id="leftSlideCtrl" style="display: none;"></b>
 					<b id="rightSlideCtrl" style="display: none;"></b>
 				</div>
@@ -80,10 +89,12 @@
 					<span id="textNotice">团队公告</span>
 					<?php ued_announcement();?>
 				</span>
-				<form action="<?php bloginfo('url');?>/" method="get" id="topSearch">
+				<div id="topSearch">
+					<form action="<?php bloginfo('url');?>/" method="get">
 					<label for="s" class="textHidden">请输入搜索关键字</label>
 					<input type="text" id="s" name="s"/>
 					<span id="btnSearch"></span>
-				</form>
+					</form>
+				</div>
 			</div>
-		</header>
+		</div>

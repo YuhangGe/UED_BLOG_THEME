@@ -3,10 +3,10 @@
 		<?php the_post(); ?>
 		<div class="postAside">
 				<div class="postAuthorImage">
-					<?php echo get_avatar(get_the_author_meta('user_email'), 100)?>
+					<img src="<?php bloginfo('template_directory');?>/assets/head/<?php the_author_meta('user_login');?>.png" width="100" height="100" alt="<?php the_author_meta('nickname')?>"/>
 				</div>
 				<div class="postAuthor postLabel">
-					<?php the_author();?>
+					<a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ));?>"><?php the_author_meta('nickname');?></a>
 				</div>
 				<div class="postDate postLabel" title="<?php the_time('Y年n月j日 G:i:s');?>">
 					<?php the_time('n月j日');?>
