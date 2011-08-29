@@ -7,7 +7,7 @@
 		 */
 		global $page, $paged;
 
-		wp_title('|', true, 'right');
+		wp_title('-', true, 'right');
 
 		// Add the blog name.
 		bloginfo('name');
@@ -15,15 +15,18 @@
 		// Add the blog description for the home/front page.
 		$site_description = get_bloginfo('description', 'display');
 		if ($site_description && (is_home() || is_front_page()))
-			echo " | $site_description";
+			echo " : $site_description";
 
 		// Add a page number if necessary:
 		if ($paged >= 2 || $page >= 2)
-			echo ' | ' . sprintf(__('Page %s', 'twentyeleven'), max($paged, $page));
+			echo ' | Page '.max($paged, $page);
 			?></title>
 		<meta http-equiv="Content-Type" content="<?php bloginfo('html_type');?>; charset=<?php bloginfo('charset');?>" />
 		<meta name="generator" content="WordPress <?php bloginfo('version');?>" />
+		
 		<!-- leave this for stats please -->
+		<link rel = "shortcut icon" href="<?php bloginfo('template_directory');?>/favicon.ico">
+		
 		<link rel="stylesheet" href="<?php bloginfo('stylesheet_url');?>" type="text/css" media="screen" />
 
 
@@ -31,6 +34,9 @@
 		<link rel="alternate" type="text/xml" title="RSS .92" href="<?php bloginfo('rss_url');?>" />
 		<link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="<?php bloginfo('atom_url');?>" />
 		<link rel="pingback" href="<?php bloginfo('pingback_url');?>" />
+		<link rel='index' title='Taobao.com UED Team' href='<?php bloginfo('url')?>'/>
+		
+		
 		<!-- KISSY -->
 		<script type="text/javascript" src="http://a.tbcdn.cn/s/kissy/1.2.0/kissy-min.js"></script>
 		<script type="text/javascript" src="<?php bloginfo('template_directory');?>/js/ued-blog.js"></script>
@@ -40,30 +46,15 @@
 		<![endif]-->
 		<!--[if lte IE 7]>
 		<style>
-			.pagers li{
-				display:inline;
-			}
-			.postBtn .down-narrow{
-				left:0px;
-			}
-			.commentArrow{
-				top:41px;
-			}
-			.commentBody{
-					display: inline;
-				zoom:1;
-			}
+			.pagers li{	display:inline;}
+			.postBtn .down-narrow{left:0px;}
+			.commentArrow{top:41px;}
+			.commentBody{display: inline;zoom:1;}
 		</style>
 		<![endif]-->
 		
 		<?php
-		
-		/* Always have wp_head() just before the closing </head>
-		 * tag of your theme, or you will break many plugins, which
-		 * generally use this hook to add elements to <head> such
-		 * as styles, scripts, and meta tags.
-		 */
-		wp_head();
+			wp_head();
 		?>
 	</head>
 	<body <?php body_class();?>>
@@ -92,7 +83,7 @@
 				<div id="topSearch">
 					<form action="<?php bloginfo('url');?>/" method="get">
 					<label for="s" class="textHidden">请输入搜索关键字</label>
-					<input type="text" id="s" name="s"/>
+					<input type="text" id="s" name="s" autocomplete="off"/>
 					<span id="btnSearch"></span>
 					</form>
 				</div>

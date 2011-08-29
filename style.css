@@ -23,6 +23,7 @@ body, ul {
 }
 em{
 	font-weight: bold;
+	font-style: normal;
 }
 p {
 	margin: 0;
@@ -221,6 +222,16 @@ body {
 	width: 772px;
 	float: left;
 }
+
+#container .section h3{
+	font-weight: normal;
+	margin: 0px;
+	font-size: 24px;
+	color: #FF8C40;
+	padding-left: 16px;
+	font-family: 'Microsoft Yahei';
+}
+
 .post {
 	padding-bottom: 34px;
 	background: url('assets/articleSep.png') repeat-x bottom left;
@@ -343,7 +354,7 @@ body {
 	left: 100px;
 	top: -1px;
 	padding:0px 3px 3px 3px;
-	width:86px;
+	width:290px;
 
 }
 .postShare:hover span{
@@ -424,8 +435,7 @@ body {
 }
 .postText {
 	word-wrap: break-word;
-	padding: 23px 29px;
-	text-indent: 2em;
+	padding: 23px 29px 39px;
 }
 .postRead {
 	width: 110px;
@@ -673,6 +683,7 @@ a#rss {
 }
 #footNav .footItem {
 	float: left;
+	max-width:160px;
 }
 #footNav li ul li {
 	float: none;
@@ -714,7 +725,7 @@ a#rss {
 }
 .footList li {
 	padding-left: 14px;
-	background: url("assets/arrow.gif") transparent no-repeat center left;
+	background: url("assets/arrow.gif") transparent no-repeat left 9px;
 	line-height: 25px;
 	font-size: 14px;
 }
@@ -757,12 +768,11 @@ a#rss {
 /*Article*/
 .postContentMain {
 	background-color: white;
-	box-shadow: -1px 2px #C6C7C6;
-	-webkit-box-shadow: -1px 2px #C6C7C6;
+	box-shadow: -1px 1px #C6C7C6;
+	-webkit-box-shadow: -1px 1px #C6C7C6;
 	float: right;
 	width: 880px;
 	border-left: 1px solid #C6C7C6;
-	border-bottom: 1px solid #C6C7C6;
 }
 .postTail {
 	background: url('assets/post-bg.png') repeat;
@@ -834,6 +844,9 @@ a#rss {
 .newComment {
 	float: right;
 	width: 880px;
+}
+.newComment span{
+	margin-left: 5px;
 }
 .inputBox {
 	margin-bottom: 19px;

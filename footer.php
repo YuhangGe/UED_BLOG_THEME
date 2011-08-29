@@ -12,7 +12,7 @@
 								<form action="<?php bloginfo('url');?>" method="get" >
 									<label for="s2" class="textHidden">请输入搜索关键字</label>
 									<div class="footSearchForm">
-										<input type="text" id="s2" name="s2"/>
+										<input type="text" id="s2" name="s" autocomplete="off"/>
 										<span id="btnSearch2"></span>
 									</div>
 								</form>
@@ -30,7 +30,7 @@
 							<li class="footSep"></li>
 							<li>
 								<ul id="stateList" class="footList">
-									<?php ued_month_archives(12);?>
+									<?php ued_month_archives(8);?>
 								</ul>
 							</li>
 						</ul>
@@ -45,7 +45,7 @@
 								<ul class="footList">
 									<?php wp_list_bookmarks(array(
 										'title_li'=>null,
-										'limit'=>12,
+										'limit'=>8,
 										'categorize'=>false
 									));?>
 								</ul>

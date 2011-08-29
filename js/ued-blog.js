@@ -14,7 +14,8 @@ $.log = function(msg) {
 R_CMTS_SHOW = 4;
 
 KISSY.ready(function() {
-	scrollComments();
+	//scrollComments();
+	ued_comment_scroll.init();
 	ued_head_slide.init();
 	ued_right_slide.init();
 });
@@ -40,28 +41,53 @@ function showHideFunc(id) {
 /**
  * 滚动显示最近评论
  */
-function scrollComments() {
-	var cmts = $('#newComContent li');
-	if(cmts.length <= R_CMTS_SHOW) {
-		return;
-	}
+ued_comment_scroll={
+	init:function(){
+		me=this;
+		var cmts=$('#newComContent li');
+		if(cmts.length <= R_CMTS_SHOW) {
+			return;
+		}
+		this.height=cmts[0].offsetHeight;
+		this.mouseIn=false;
 
-	doScrollComments(cmts[0].offsetHeight);
-}
-
-function doScrollComments(height) {
-	var comments = $('#newComContent li');
-	var last_one = comments[comments.length - 1];
-	$('#newComContent').animate({
-		top : height + 'px'
-	}, 1, undefined, function() {
-		$(last_one).remove().css('display', 'none').prependTo($('#newComContent').css('top', '0px')).fadeIn(1, function() {
-			setTimeout(function() {
-				doScrollComments(height)
-			}, 2000);
+		$('#newComContent').on('mouseenter',function(){
+			me.mouseIn=true;
+			if(me.timeDo!=null){
+				clearTimeout(me.timeDo);
+				me.timeDo=null;
+			}
+		}).on('mouseleave',function(){
+			me.mouseIn=false;
+			if(me.timeDo==null){
+				me.timeDo=setTimeout(function(){
+					me.doScroll(me);
+				},2000);
+			}
 		});
-	})
+		
+		this.timeDo=setTimeout(function(){
+			me.doScroll(me);
+		},2000);
+	},
+	doScroll:function(me){
+		var comments = $('#newComContent li');
+		var last_one = comments[comments.length - 1];
+		$('#newComContent').animate({
+			top : me.height + 'px'
+		}, 1, undefined, function() {
+			$(last_one).remove().css('display', 'none').prependTo($('#newComContent').css('top', '0px')).fadeIn(1, function() {
+				if(me.mouseIn==true)
+					return;
+				me.timeDo=setTimeout(function() {
+					me.doScroll(me)
+				}, 2000);
+			});
+		})
+	}
 }
+
+
 
 /**
  * 将页面滚动到顶，使用加速度模拟
@@ -87,22 +113,36 @@ function scrollTopLoop(top, i) {
  * 控制分享框的显隐
  */
 function showShare(id) {
-	$('#shareDlg-' + id).fadeIn(0.3);
+	$('#shareDlg-' + id).show();
 }
 
 function hideShare(id) {
-
-	$('#shareDlg-' + id).fadeOut(0.3);
+	$('#shareDlg-' + id).hide();
 }
 
 /**
- * “顶”功能的实现
+ * “顶”功能的实现，通过cookie进行控制，ued-ding中保存了该用户顶过的所有文章的id
  */
 function ding(path, pid) {
+	if(KISSY.Cookie.get('ued-ding')==null){
+		KISSY.Cookie.set('ued-ding',"",365);
+	}else{
+		var id_arr=KISSY.Cookie.get('ued-ding').split(',');
+		for(var i=0;i<id_arr.length;i++){
+			if(id_arr[i]==pid.toString()){
+				alert("你已经顶过这篇文章啦，不要贪心哦^_^~~~~~");
+				return;
+			}
+		}
+	}
 	KISSY.io.post(path, {
 		'ued-ding-id' : pid
 	}, function(rtn) {
 		if(rtn.state == "success") {
+			var id_arr=KISSY.Cookie.get('ued-ding').split(',');
+			id_arr.push(rtn.id.toString());
+			//设置一年的cookie
+			KISSY.Cookie.set('ued-ding',id_arr.join(','),365);
 			dingAnim(rtn.id, rtn.new_num);
 		}
 	}, "json");
@@ -137,8 +177,8 @@ ued_head_slide = {
 			});
 		});
 		$('#J_HeadSlide').on('mouseenter', function() {
-			me.l_ctrl.fadeIn(0.3);
-			me.r_ctrl.fadeIn(0.3);
+			me.l_ctrl.show();
+			me.r_ctrl.show();
 		}).on('mouseleave', function() {
 			me.l_ctrl.fadeOut(0.3);
 			me.r_ctrl.fadeOut(0.3);

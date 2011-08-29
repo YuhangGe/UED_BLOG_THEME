@@ -1,9 +1,9 @@
 <?php 
 /**
- * 淘宝UED博客主题文件 
+ * 淘宝UED博客主题functions.php文件 
  * 辅助函数集合
  * 所有ued_开头的函数是用于辅助输出html内容的。
- * 基于函数基本只用于逻辑。
+ * 其它函数基本只用于逻辑。
  * Copyright Taobao.com 2011
  * Author:geyuhang.pt
  * 
@@ -49,7 +49,7 @@ function ued_recent_comments($num,$total){
 	foreach($cmts as $c){
 		$link=get_comment_link($c->comment_ID);
 		if(mb_strlen($c->comment_content,'utf-8')>18)
-			$content=mb_substr($c->comment_content,1,18,'utf-8').'...';
+			$content=mb_substr($c->comment_content,0,18,'utf-8').'...';
 		else
 			$content=$c->comment_content;
 		echo "<li><a href='{$link}'>{$content}</a></li>";
@@ -129,6 +129,24 @@ function get_month_archives($limit){
 		return $arcresults;
 }
 
+function ued_jia_this(){
+	echo '<!-- JiaThis Button BEGIN -->
+		  <div id="ckepop">
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_renren"></a>
+		<a class="jiathis_button_qzone"></a>
+		<a class="jiathis_button_tqq"></a>
+		<a class="jiathis_button_twitter"></a>
+		<a class="jiathis_button_fb"></a>
+		<a class="jiathis_button_tianya"></a>
+		<a class="jiathis_button_douban"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank">更多</a>	
+		</div>
+		<script type="text/javascript" src="http://v2.jiathis.com/code/jia.js" charset="utf-8"></script>
+		<!-- JiaThis Button END -->';
+}
+
+
 /*
  * 输出头部幻灯片
  */
@@ -200,9 +218,12 @@ function ued_post_comments($pid){
 	endforeach ;
 }
 
+/**
+ * “顶”的相关功能实现，这些功能可以考虑做成插件形式，但目前直接写入主题之中
+ */
 function ued_ding(){
-	echo "<div class='postUp postLabel LabelDark' onclick='ding(\"".get_bloginfo('wpurl')."/\",".get_the_ID().");'>";
-	echo "顶（<span class='dingNum' id='ding-num-".get_the_ID()."'>".get_ding(get_the_ID())."</span>）</div>";
+		echo "<div class='postUp postLabel LabelDark' onclick='ding(\"".get_bloginfo('wpurl')."/\",".get_the_ID().");'>";
+		echo "顶（<span class='dingNum' id='ding-num-".get_the_ID()."'>".get_ding(get_the_ID())."</span>）</div>";
 }
 function get_ding($pid){
 	$num = get_post_meta($pid, 'ued-ding-num',true);
@@ -238,10 +259,16 @@ function ued_ding_ajax(){
 	}
 	
 }
-
+//所有到根目录的http请求到wordpress后框架都会include 主题的functions.php文件，所以可以把ajax请求放在这里处理
+//注意函数中使用了exit()函数用来终止worpress框架的后续处理。
+//考虑过使用单独的页面接收ajax请求，但那样update_post_meta函数不能正常执行，不知道为什么。网上的wordpress的"顶"
+//插件也是在根目录中接收的的ajax请求
 ued_ding_ajax();
 
 
+/**
+ * 渲染顶头menu
+ */
 function ued_menu(){
 	static $menu_names=array('交互设计','视觉设计','网页前端','用户研究','杂七杂八');
 	foreach($menu_names as $m){
