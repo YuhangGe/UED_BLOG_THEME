@@ -1,7 +1,9 @@
 <?php get_header();?>
 <div id="container" class="center w1000">
 	<div class="section">
-		<?php
+
+		<?php if(have_posts()):
+		
 		/*
 		 * 这个部分用来判断是否是存档页面，依次是：
 		 * 是否是搜索后的结果，是否是包含某个标签的文章集合，
@@ -18,9 +20,7 @@
 		} elseif (is_author()) {
 			$is_author = true;
 		}
-		?>
-
-		<?php if(have_posts()):
+		
 		?>
 		<?php //进入模板循环?>
 		<?php $post_count=1;while(have_posts()): the_post();
@@ -114,10 +114,13 @@
 		?>
 		<?php else:?>
 			<div style="padding:20px;">
-		<h2>没有找到相关文章</h2>
-		<p>
-			TODO：这张页面可能需要设计师设计
-		</p>
+		<img src="<?php bloginfo('template_directory');?>/assets/404.png" />
+		<div style="margin-top: 10px;padding: 5px;">
+			<form action="<?php bloginfo('url');?>/" method="get">
+				<input type="text" id="s3" name="s" autocomplete="off" style="width:180px;"/>
+				<input type="submit" value="搜索" />
+			</form>
+		</div>
 		</div>
 		<?php endif;?>
 		<?php ued_pagenavi();?>

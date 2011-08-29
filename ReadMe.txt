@@ -1,13 +1,13 @@
 ﻿UED BLOG TEMPLATE Ver 1.0
-
+Site: http://ued.taobao.com
+Contact: geyuhang.pt@taobao.com  abraham1@163.com
 TODO:
-1、后台管理（团队公告、页头幻灯片、右边栏幻灯片）的三张页面美化。
-2、后台管理三张页面可以合并成一张页面。
-3、后台管理使用ajax实现。同时，后台现在幻灯片路径需要手动输入，考虑做成代码读取media文件然后选择。（media library的对话框经查阅资料应该是不提供直接呼出的api的，所以需要自己写文件选取代码。可以查阅get_posts()函数，wordpress的所有图片、附件和日志统一放在posts表中。具体请参考wordpress数据库文档）
-4、404.php页面。
-5、存档页面的美化（在index.php开头有各种is_xxx函数用来判断当面页面是否属于某个存档，相见代码中的注释）.包括当搜索后没有任何结果时的页面。
-7、评论的ajax实现。
-6、ie6的兼容。（这个个人感觉可以不用了，wordpress官方都放弃ie6了，而且png图片的透明是个很头痛的问题）
+* 后台管理三张页面可以合并成一张页面。
+* 后台现在幻灯片路径需要手动输入，考虑做成代码读取media文件然后选择。（media library的对话框经查阅资料应该是不提供  直接呼出的api的，所以需要自己写文件选取代码。可以查阅get_posts()函数，wordpress的所有图片、附件和日志统一放在    posts 表中。具体请参考wordpress数据库文档）
+* 404.php页面。
+
+* 评论的ajax实现。
+* ie6的兼容。（这个个人感觉可以不用了，wordpress官方都放弃ie6了，而且png图片的透明是个很头痛的问题）
 
 
 

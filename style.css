@@ -23,9 +23,19 @@ body, ul {
 	font-family: '新宋体' Arial, Helvetica, sans-serif;
 	color: #4c4943;
 }
-em{
-	font-weight: bold;
-	font-style: normal;
+address, cite, dfn, em, var {
+    font-style: normal;
+}
+pre {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border: 1px solid #DDDDDD;
+    line-height: 150%;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+code, kbd, pre, samp, tt {
+    font-family: "Courier New",Courier,monospace;
 }
 p {
 	margin: 0;
@@ -34,7 +44,33 @@ p {
 table{
 	border-spacing: 0;
 }
-/*Public Class*/
+blockquote {
+    border-left: 5px solid #DDDDDD;
+    margin: 0.9375em 30px 0 10px;
+    padding-left: 20px;
+}
+button, input, select, textarea {
+    font-size: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Microsoft Yahei";
+}
+h1 {
+    font-size: 18px;
+}
+h2 {
+    font-size: 16px;
+}
+h3 {
+    font-size: 14px;
+}
+h4, h5, h6 {
+    font-size: 100%;
+}
+small {
+    font-size: 12px;
+}
+
 .textHidden {
 	text-indent: -9999px;
 	overflow: hidden;

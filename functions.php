@@ -205,7 +205,7 @@ function ued_post_comments($pid){
 		<div class="commentTitle">
 			
 			<?php if($comment->user_id!=0):?>
-				<img src="<?php bloginfo('template_directory');?>/assets/head/<?php the_author_meta('user_login');?>.png" width="32" height="32" alt="<?php the_author_meta('nickname')?>"/>
+				<img src="<?php bloginfo('template_directory');?>/assets/head/<?php the_author_meta('user_login', $comment->user_id);?>.png" width="32" height="32" alt="<?php the_author_meta('nickname', $comment->user_id)?>"/>
 			<?php else:
 				echo get_avatar($comment, 32);
 			endif;?>
@@ -213,7 +213,7 @@ function ued_post_comments($pid){
 			<?php if($comment->user_id==0):?>
 				<span><?php echo $comment -> comment_author_url == '' ? $comment -> comment_author : '<a href="' . $comment -> comment_author_url . '">' . $comment -> comment_author . '</a>';?></span>
 			<?php else:?>
-				<span><a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ));?>"><?php the_author_meta('nickname');?></a></span>
+				<span><a href="<?php echo get_author_posts_url( $comment->user_id);?>"><?php the_author_meta('nickname', $comment->user_id);?></a></span>
 			<?php endif;?>
 				<span class="commentDate">（<?php echo mysql2date("n月j日",$comment->comment_date);?>）</span>
 			</div>
