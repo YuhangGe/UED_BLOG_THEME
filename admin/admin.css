@@ -1,0 +1,107 @@
+.grid {
+	width: 100%;
+	overflow: hidden;
+}
+.grid-zebra .row-even td {
+	background-color: #fafafa;
+}
+.grid .table {
+	width: 100%;
+	border: 1px solid #ccc;
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+.grid caption {
+	text-align: left;
+}
+.grid th, .grid td {
+	padding: 5px 10px;
+}
+.grid th {
+	height: 18px;
+	line-height: 14px;
+	vertical-align: bottom;
+	font-weight: bold;
+	border: 1px solid #ccc;
+	background: #f2f2f2;
+}
+.grid td {
+	vertical-align: top;
+	border-top: 1px solid #ccc;
+	background: #fff;
+}
+.grid .cell-sortable {
+	cursor: pointer;
+	_text-decoration: underline;
+}
+.grid .cell-sortable .icon {
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+	margin-left: 5px;
+}
+.grid .cell-sortable:hover {
+	background: #cce1ff;
+}
+.grid .cell-asc .icon {
+	background-position: -100px -20px;
+}
+.grid .cell-desc .icon {
+	background-position: -80px -20px;
+}
+.grid .cell-extra {
+	width: 25px;
+	padding: 5px 0;
+	text-align: center;
+	text-indent: 0;
+	border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;
+	background: #f2f2f2;
+}
+.grid .icon-expand {
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+	margin: 0 6px;
+	cursor: pointer;
+}
+.grid .row-extra td {
+	border-top: 1px dashed #ccc;
+}
+.grid .row-extra {
+	display: none;
+}
+.grid .row-expanded {
+	display: table-row;*
+	display: block;
+}
+.grid .row-hover td {
+	background: #e8fcd6;
+}
+.grid .row-selected td {
+	background: #e1edff !important;
+}
+.grid td div {
+	left: -5px;
+	position: relative;
+}
+.edit {
+	border: 1px solid green;
+	font-size: 13px;
+	height: 100%;
+	margin-right: 10px;
+	padding: 1px 2px;
+	width: 100%;
+}
+.row-add td {
+	padding-left: 5px;
+}
+.row-edit {
+	display: none;
+	height: 90%;
+	left: 0;
+	margin: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}

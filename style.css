@@ -1,11 +1,13 @@
 /*
- Theme Name: UED Template
+ Theme Name: Taobao UED Template
  Theme URI: http://ued.taobao.com
- Description:
+ Description: 淘宝UED官方博客主题，Bug和建议可以联系 geyuhang.pt@taobao.com
  Version: 1.0
- Author: woc2006
- Author URI:
- */
+ Author: Taobao UED Team
+ Author URI: http://ued.taobao.com
+*/
+
+
 /*Reset*/
 
 ul {
@@ -28,6 +30,9 @@ em{
 p {
 	margin: 0;
 	line-height: 24px;
+}
+table{
+	border-spacing: 0;
 }
 /*Public Class*/
 .textHidden {
@@ -112,10 +117,12 @@ body {
 	height: 270px;
 	overflow: hidden;
 }
+
 #J_HeadSlide .ks-switchable-content li{
 	height: 250px;
 	width : 1000px;
 	overflow: hidden;
+	cursor: pointer;
 }
 
 #J_HeadSlide .ks-switchable-nav {
@@ -434,8 +441,26 @@ body {
 	text-decoration: none;
 }
 .postText {
+	font-size:14px;
+	line-height: 1.8;
 	word-wrap: break-word;
 	padding: 23px 29px 39px;
+}
+.postText ul, .postText ol{
+	font-size: 14px;
+}
+.postText p{
+	line-height: 1.8;
+	margin: 15px 0px;
+}
+.postText a{
+	color:#0064B1;
+}
+.postText ul, .postText ol{
+	margin: 15px 0 15px 30px;
+}
+.postText li{
+	list-style: disc;
 }
 .postRead {
 	width: 110px;
@@ -584,6 +609,7 @@ body {
 #J_RightSlide .ks-switchable-content{
 	height: 299px;
 	overflow: hidden;
+	cursor: pointer;
 }
 #rightSlideNav {
 	position: absolute;

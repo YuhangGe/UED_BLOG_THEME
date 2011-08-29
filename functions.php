@@ -160,9 +160,17 @@ function ued_head_slide(){
 	}
 	$nav_html="";
 	$slide_html="";
+	$first=true;
 	foreach($head_slides as $slide){
 		$nav_html.="<li></li>";
-		$slide_html.="<li><img src='{$slide->url}' alt='{$slide->alt}' title='{$slide->describe}' /></li>";
+		$slide_html.="<li";
+		if($first==false){
+			$slide_html.=" style='display:none;'";
+		}else{
+			$first=false;
+		}
+		$link=empty($slide->link)?'javascript:;':$slide->link;
+		$slide_html.="><a href='$link'><img src='{$slide->url}' alt='{$slide->alt}' title='{$slide->describe}' /></a></li>";
 	}
 	echo "<ul class='ks-switchable-content'>$slide_html</ul><ul class='ks-switchable-nav'>$nav_html</ul>";
 }
@@ -179,7 +187,8 @@ function ued_right_slide(){
 
 	foreach($right_slides as $slide){
 		$nav_name[]=$slide->alt;
-		$slide_html.="<li><img src='{$slide->url}' alt='{$slide->alt}' title='{$slide->describe}' /></li>";
+		$link=empty($slide->link)?'javascript:;':$slide->link;
+		$slide_html.="<li><a href='$link'><img src='{$slide->url}' alt='{$slide->alt}' title='{$slide->describe}' /></a></li>";
 	}
 	$nav_html=json_encode($nav_name);
 	echo "<ul class='ks-switchable-content'>$slide_html</ul><script>ued_right_slide.items=$nav_html;</script>";
@@ -351,16 +360,27 @@ function ued_announcement(){
 /**
  * 以下内容是为后台管理增加管理页面。
  * 请参考wordpress开发文档
- * TODO: 目前后台管理每个小模块都是一张页面，可以考虑合并成一个UED博客管理页面。同时，下个版本可以考虑ajax实现。
+ * TODO: 目前后台管理每个小模块都是一张页面，可以考虑合并成一个UED博客管理页面。
  * */
 
 /*
  * 增加团队公告设置页面
  */
+add_action('admin_init', 'ued_admin_script_init');
 add_action('admin_menu', 'ued_set_announce');
+function ued_admin_script_init(){
+	wp_register_script('kissy', 'http://a.tbcdn.cn/s/kissy/1.2.0/kissy-min.js');
+	wp_register_script('slide', get_bloginfo('template_directory')."/admin/admin_slide.js");
+	
+}
+function ued_admin_script_load(){
+	 wp_enqueue_script('kissy');
+	 wp_enqueue_script('slide');
+}
+
 
 function ued_set_announce() {
-	add_dashboard_page('UED Announcement', '团队公告', 'manage_options', 'ued-announce-identifier', 'ued_announce_page');
+	$page=add_dashboard_page('UED Announcement', '团队公告', 'manage_options', 'ued-announce-identifier', 'ued_announce_page');
 }
 
 function ued_announce_page(){
@@ -371,12 +391,36 @@ function ued_announce_page(){
  * 头部幻灯片设置页面
  */
 add_action('admin_menu','ued_set_headslide');
-
+add_action('wp_ajax_ued_update_slide', 'ued_ajax_slide');
 function ued_set_headslide(){
-	add_dashboard_page('UED Head Slide','头部幻灯','manage_options','ued-headslide-identifier','ued_headslide_page');
+	$page=add_dashboard_page('UED Head Slide','头部幻灯','manage_options','ued-headslide-identifier','ued_headslide_page');
+	add_action('admin_print_scripts-' . $page, 'ued_admin_script_load');
 }
 function ued_headslide_page(){
-	include_once dirname ( __FILE__ ) . "/admin/head_slide.php";
+	define('UED_SLIDE_TYPE','head');
+	include_once dirname ( __FILE__ ) . "/admin/admin_slide.php";
+}
+function ued_ajax_slide(){
+	$output=array();
+	if(empty($_REQUEST['data']) || empty($_REQUEST['type'])){
+		$output['state']='failure';
+	}else{
+		$slides=json_decode(stripslashes($_REQUEST['data']));
+		//var_dump($slides);
+		if($slides===null){
+			$output['state']='failure';
+		}else{
+			 if($_REQUEST['type']=='head')
+				 update_option("ued_head_slide",json_encode($slides));
+			 elseif($_REQUEST['type']=='right')
+				 update_option("ued_right_slide",json_encode($slides));
+			$output['state']='success';
+			$output['data']=json_encode($slides);
+		}
+		
+	}
+	echo json_encode($output);
+	die();
 }
 
 /**
@@ -386,9 +430,11 @@ function ued_headslide_page(){
 add_action('admin_menu','ued_set_rightslide');
 
 function ued_set_rightslide(){
-	add_dashboard_page('UED Head Slide','右侧幻灯','manage_options','ued-rightslide-identifier','ued_rightslide_page');
+	$page=add_dashboard_page('UED Head Slide','右侧幻灯','manage_options','ued-rightslide-identifier','ued_rightslide_page');
+	add_action('admin_print_scripts-' . $page, 'ued_admin_script_load');
 }
 function ued_rightslide_page(){
-	include_once dirname ( __FILE__ ) . "/admin/right_slide.php";
+	define('UED_SLIDE_TYPE','right');
+	include_once dirname ( __FILE__ ) . "/admin/admin_slide.php";
 }
 ?>
