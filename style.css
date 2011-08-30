@@ -70,7 +70,9 @@ h4, h5, h6 {
 small {
     font-size: 12px;
 }
-
+img{
+	border: 0px;
+}
 .textHidden {
 	text-indent: -9999px;
 	overflow: hidden;
