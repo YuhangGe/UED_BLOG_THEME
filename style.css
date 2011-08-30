@@ -573,13 +573,16 @@ body {
 	text-shadow: -1px 1px white;
 }
 #hotTagContent {
+	font-size:12px;
+	height: 120px;
+	overflow: hidden;
 }
 #hotTagContent a {
 	display: inline-block;
 	text-decoration: none;
 	color: #666;
 	text-shadow: -1px 1px white;
-	margin: 15px 15px 7.5px;
+	margin: 15px 15px 10px;
 }
 #newComments {
 	width: 207px;

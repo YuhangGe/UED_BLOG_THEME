@@ -13,13 +13,13 @@
  * 获取$num个热门标签，按标签数量排名
  */
 function get_hot_tags($num){
-	$tags = get_terms( 'post_tag', array( 'orderby' => 'count', 'order' => 'DESC' ) ); 
+	$tags = get_terms( 'post_tag', array( 'orderby' => 'count', 'order' => 'DESC','number'=>$num ) ); 
 	return $tags;
 }
 
 //输出10个热门标签
 function ued_hot_tags(){
-	$tags=get_hot_tags(10);
+	$tags=get_hot_tags(15);
 
 	foreach($tags as $tag){
 

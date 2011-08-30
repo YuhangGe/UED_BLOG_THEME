@@ -81,7 +81,7 @@ ued_comment_scroll={
 					return;
 				me.timeDo=setTimeout(function() {
 					me.doScroll(me)
-				}, 2000);
+				}, 3000);
 			});
 		})
 	}
