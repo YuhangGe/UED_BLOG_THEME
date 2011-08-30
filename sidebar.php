@@ -37,7 +37,7 @@
 			</div>
 			<div id="taoBoy"><a href=""></a></div>
 			<div id="designLink">
-				<a href=""><img src="<?php bloginfo('template_directory'); ?>/assets/slide/design.jpg" alt="潮流设计平台" /></a>
+				<a href=""><img src="<?php bloginfo('template_directory'); ?>/assets/design.jpg" alt="潮流设计平台" /></a>
 				<div id="designTitle" class="fontHei">潮流设计平台</div>
 			</div>
 		</div>
