@@ -4,22 +4,7 @@
 
 		<?php if(have_posts()):
 		
-		/*
-		 * 这个部分用来判断是否是存档页面，依次是：
-		 * 是否是搜索后的结果，是否是包含某个标签的文章集合，
-		 * 是否是某天、某月、某年的文章集合
-		 * 是否是某个作者的文章集合
-		 * 注意是否是某个作者的文章集合，为了得到作者名字，需要延后处理，因为wp不提供相关函数。
-		 * */
-		if (is_search()) {
-			echo "<h3><em>" . get_search_query() . "</em> 的搜索结果</h3>";
-		} elseif (is_tag()) {
-			echo "<h3>标签包括 <em>" . single_tag_title('', false) . "</em> 的文章</h3>";
-		} elseif (is_day() || is_month() || is_year()) {
-			echo "<h3><em>" . get_the_date('Y年n月') . "</em> 的文章</h3>";
-		} elseif (is_author()) {
-			$is_author = true;
-		}
+		
 		
 		?>
 		<?php //进入模板循环?>
@@ -31,10 +16,32 @@
 		 *  这里是某个作者的文章集合的延后处理，通过第一篇文章得到作者信息展示标题。
 		 */
 		?>
-		<?php if($post_count==1 && $is_author==true):
-		?>
-		<h3><em><?php the_author_meta('nickname');?></em> 的文章</h3>
-		<?php endif;?>
+		<?php
+		
+		
+		 if($post_count==1){
+		
+			/*
+			 * 这个部分用来判断是否是存档页面，依次是：
+			 * 是否是搜索后的结果，是否是包含某个标签的文章集合，
+			 * 是否是某天、某月、某年的文章集合
+			 * 是否是某个作者的文章集合
+			 * 注意是否是某个作者的文章集合，为了得到作者名字，需要延后处理，因为wp不提供相关函数。
+			 * */
+			if (is_search()) {
+				echo "<h3><em>" . get_search_query() . "</em> 的搜索结果</h3>";
+			} elseif (is_tag()) {
+				echo "<h3>标签包括 <em>" . single_tag_title('', false) . "</em> 的文章</h3>";
+			} elseif (is_day() || is_month() || is_year()) {
+				echo "<h3><em>";
+				the_date('Y年n月');
+				echo "</em> 的文章</h3>";
+			} elseif (is_author()) {
+				echo '<h3><em>'.get_the_author_meta('nickname').'</em> 的文章</h3>';
+			}
+
+	
+		}?>
 
 		<div class="post<?php
 		if ($post_count == count($posts))

@@ -42,19 +42,49 @@ function get_recent_comments($num){
  * $num:要显示的条数
  * $total:总共得到的条数。剩下的不显示，由js控制动画展示。
  * 目前$num没有作用，因为前端使用overflow:hidden实现了控制
+ * 注意此次需要截取评论，如果使用php的mbstring扩展，可以直接使用相关函数，
+ * 当没有启用扩展时，使用自己写的函数，但效率会低。
  * */
 function ued_recent_comments($num,$total){
 	$cmts=get_recent_comments($total);
 
 	foreach($cmts as $c){
 		$link=get_comment_link($c->comment_ID);
-		if(mb_strlen($c->comment_content,'utf-8')>18)
-			$content=mb_substr($c->comment_content,0,18,'utf-8').'...';
-		else
-			$content=$c->comment_content;
+		if(function_exists('mbdsd_strlen')){
+			if(mb_strlen($c->comment_content,'utf-8')>18)
+				$content=mb_substr($c->comment_content,0,18,'utf-8').'...';
+			else
+				$content=$c->comment_content;
+		}else{
+			if(strlen($c->comment_content)>60){
+				$content=strcut($c->comment_content,0,60).'...';
+			}else
+				$content=$c->comment_content;
+		}
+		
 		echo "<li><a href='{$link}'>{$content}</a></li>";
 	}
 }
+
+function strcut($str,$start,$len){
+	if($start < 0)
+		$start = strlen($str)+$start;
+	
+	$retstart = $start+getOfFirstIndex($str,$start);
+	$retend = $start + $len -1 + getOfFirstIndex($str,$start + $len);
+	return substr($str,$retstart,$retend-$retstart+1);
+}
+//判断字符开始的位置
+function getOfFirstIndex($str,$start){
+	$char_aci = ord(substr($str,$start-1,1));
+	if(223<$char_aci && $char_aci<240)
+		return -1;
+	$char_aci = ord(substr($str,$start-2,1));
+	if(223<$char_aci && $char_aci<240)
+		return -2;
+	return 0;
+}
+
 
 //输出日志的评论
 function ued_tag_box(){
